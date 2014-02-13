@@ -1,0 +1,60 @@
+#!/usr/local/bin/python
+import os
+import sys
+import random
+
+C1   = '\033[92m'
+C2   = '\033[94m'
+ERR  = '\033[91m'
+ENDC = '\033[0m'
+
+def file_len(file):
+	with open(file) as f:
+		for i, l in enumerate(f):
+			pass
+	return i + 1
+
+if len(sys.argv) != 3:
+	sys.stderr.write(ERR + "flashcards: must specify exactly 2 files.\n" + ENDC)
+	sys.exit(1)
+
+f1 = sys.argv[1]
+f2 = sys.argv[2]
+
+if not os.path.isfile(f1):
+	sys.stderr.write(ERR + "flashcards: cannot read " + f1 + ENDC + "\n")
+	sys.exit(1)
+if not os.path.isfile(f2):
+	sys.stderr.write(ERR + "flashcards: cannot read " + f2 + ENDC + "\n")
+	sys.exit(1)
+
+count = file_len(f1)
+
+if count != file_len(f2):
+	sys.stderr.write(ERR + "flashcards: the files must have the same number of
+			lines.\n" + ENDC)
+	sys.exit(1)
+
+free  = range(1, count + 1)
+
+card1 = []
+card2 = []
+
+with open(f1) as f:
+	card1 = f.readlines()
+with open(f2) as f:
+	card2 = f.readlines()
+
+while len(free) != 0:
+	i = random.choice(free)
+	free.remove(i)
+
+	deck = random.choice([1, 2])
+	if deck == 1:
+		print C1 + card1[i - 1] + ENDC
+		raw_input()
+		print C2 + card2[i - 1] + ENDC
+	if deck == 2:
+		print C2 + card2[i - 1] + ENDC
+		raw_input()
+		print C1 + card1[i - 1] + ENDC
