@@ -9,10 +9,10 @@ C3   = '\033[95m'
 ENDC = '\033[0m '
 
 def usage():
-	print "usage: flashcard: [-h] [-a] [-s] file1 file2"
-	print "       -h    Show this help"
-	print "       -s    Shuffle the deck"
-	print "       -a    Alternate the first side of the card to be shown, randomly"
+	print "usage: flashcard: [-h] [-a] [-s] file1 file2\n\
+           -h    Show this help\n\
+           -s    Shuffle the deck\n\
+           -a    Alternate the first side of the card to be shown, randomly"
 
 def readable(path):
 	return os.access(path, os.R_OK)
