@@ -5,56 +5,86 @@ import random
 
 C1   = '\033[92m'
 C2   = '\033[94m'
-ERR  = '\033[91m'
-ENDC = '\033[0m'
+C3   = '\033[95m'
+ENDC = '\033[0m '
 
-def file_len(file):
-	with open(file) as f:
+def usage():
+	print "usage: flashcard: [-h] [-a] [-s] file1 file2"
+	print "       -h    Show this help"
+	print "       -s    Shuffle the deck"
+	print "       -a    Alternate the first side of the card to be shown, randomly"
+
+def readable(path):
+	return os.access(path, os.R_OK)
+
+def line_count(path):
+	with open(path) as f:
 		for i, l in enumerate(f):
 			pass
 	return i + 1
 
-if len(sys.argv) != 3:
-	sys.stderr.write(ERR + "flashcards: must specify exactly 2 files.\n" + ENDC)
-	sys.exit(1)
+def main(args):
+	alternate = False
+	shuffle   = False
+	end_args  = False
+	files     = []
+	for a in args:
+		end_args = end_args or (a == '--')
+		if not end_args and a.startswith('-'):
+			if a == '-a':
+				alternate = True
+				continue
+			if a == '-s':
+				shuffle = True
+				continue
+			if a == '-h':
+				usage()
+				sys.exit()
+			else:
+				usage()
+				sys.exit()
+		else:
+			if a != '--':
+				files.append(a)
+	if len(files) != 2:
+		usage()
+		sys.exit()
+	for f in files:
+		if not readable(f):
+			print "flashcard: " + f + " is not readable."
+			sys.exit(1)
+	lines = line_count(files[0])
+	if lines != line_count(files[1]):
+		print "flashcard: the files must have the same number of lines."
+		sys.exit(1)
+	deck = range(1, lines + 1)
+	
+	with open(files[0]) as f:
+		card1 = f.readlines()
+	with open(files[1]) as f:
+		card2 = f.readlines()
 
-f1 = sys.argv[1]
-f2 = sys.argv[2]
+	while len(deck) != 0:
+		c = deck[0]
+		if shuffle:
+			c = random.choice(deck)
+		deck.remove(c)
+		
+		side = 1
+		if alternate:
+			side = random.choice([1, 2])
 
-if not os.path.isfile(f1):
-	sys.stderr.write(ERR + "flashcards: cannot read " + f1 + ENDC + "\n")
-	sys.exit(1)
-if not os.path.isfile(f2):
-	sys.stderr.write(ERR + "flashcards: cannot read " + f2 + ENDC + "\n")
-	sys.exit(1)
+		try:
+			if side == 1:
+				print C1 + "Q:" + ENDC + card1[c - 1].rstrip()
+				raw_input(C2 + "A:" + ENDC)
+				print " " * 3 + C3 + card2[c - 1].rstrip() + ENDC + "\n"
+			if side == 2:
+				print C2 + "Q:" + ENDC + card2[c - 1].rstrip()
+				raw_input(C1 + "A:" + ENDC)
+				print " " * 3 + C3 + card1[c - 1].rstrip() + ENDC + "\n"
+		except (KeyboardInterrupt, Exception):
+			sys.exit(0)
 
-count = file_len(f1)
-
-if count != file_len(f2):
-	sys.stderr.write(ERR + "flashcards: the files must have the same number of
-			lines.\n" + ENDC)
-	sys.exit(1)
-
-free  = range(1, count + 1)
-
-card1 = []
-card2 = []
-
-with open(f1) as f:
-	card1 = f.readlines()
-with open(f2) as f:
-	card2 = f.readlines()
-
-while len(free) != 0:
-	i = random.choice(free)
-	free.remove(i)
-
-	deck = random.choice([1, 2])
-	if deck == 1:
-		print C1 + card1[i - 1] + ENDC
-		raw_input()
-		print C2 + card2[i - 1] + ENDC
-	if deck == 2:
-		print C2 + card2[i - 1] + ENDC
-		raw_input()
-		print C1 + card1[i - 1] + ENDC
+if __name__ == '__main__':
+	main(sys.argv[1:])
