@@ -22,5 +22,6 @@ An example deck (beginner Swedish vocabulary) can be found at the `example` dire
 TODO
 ====
 
+* High priority: find out alternative formats for deck files
 * Be able to rate how well you remember an option
 * Make a tool for generating flashcards easily
