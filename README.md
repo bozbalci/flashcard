@@ -3,6 +3,8 @@ flashcard
 
 Prepare plain-text flashcards and view them on the terminal
 
+![flashcard screenshot](http://bugsofberk.net/assets/flashcard.png)
+
 Usage
 =====
 
