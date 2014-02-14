@@ -17,7 +17,7 @@ where `file1` and `file2` must consist of equal number of lines, line 1 of `file
 
 After a card is shown, type your guess and press enter. The other side of the card will be shown afterwards.
 
-An example deck (beginner Swedish vocabulary) can be found at the `example` directory.
+An example deck (beginner Swedish vocabulary) can be found at the `example` directory. It has been fetched from [this wonderful Online Swedish course by Björn Engdahl.](http://www.onlineswedish.com/main.php)
 
 TODO
 ====
