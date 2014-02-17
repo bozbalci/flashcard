@@ -1,0 +1,28 @@
+# -*- coding: utf-8 -*-
+
+# This is an example dictionary file that can be loaded into flashcard.
+
+# Dictionary files are highly experimental and lack some key features, such as:
+#     * The program will not read this dictionary in the order you write it here
+
+# However, it allows for adding comments in the file and can be read more easily.
+# Use with caution. You may change the first line of this file to match your
+# encoding needs.
+
+#   English         Swedish
+#   -------------   -------------
+{
+	"more"        : "mer(a) ['me:r(a)]",
+	"most"        : "mest [mest]",
+	"than"        : "än [än]",
+	"as ... as"   : "lika ... som [li:ka] [såm]",
+	"ago"         : "för ... sedan [fö:r] [sen]",
+	"in (time)"   : "om [åm]",
+	"for (time)"  : "i [i:]",
+	"during"      : "under ['under]",
+	"before"      : "innan [*inan]",
+	"year"        : "ett år - [å:r]",
+	"way / road"  : "en väg -ar [vä:g]"
+}
+
+# vim: ft=python
