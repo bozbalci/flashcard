@@ -27,11 +27,19 @@ An example deck (beginner Swedish vocabulary) can be found at the `example` dire
 
 The `two-files` subdirectory contains the examples in old format. The `dictionary` subdirectory contains the examples in the new format, which allows generating flashcards from a single file.
 
+## mkdeck helper script
+mkdeck can be used with flashcard to generate a dictionary formatted file from two files (old format).
+
+        usage: mkdeck: [-o output] [-e] file1 file2
+               -o    Specify the output file, stdout by default
+               -e    Define the Python source encoding (PEP 0263), utf-8 by default
+               -h    Show this help
+
 # Known Issues
 
 * Files in the dictionary format are not read into the program in the correct order of entries.
+* mkdeck doesn't tabulate the output very well.
 
 # TODO
 
 * Be able to rate how well you remember an option
-* Make a tool for generating flashcards easily in the dictionary format
