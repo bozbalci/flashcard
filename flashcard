@@ -5,47 +5,50 @@ import random
 import parser
 
 opts = {
-		'alternate' : False,
-		'shuffle'   : False
+	'alternate' : False,
+	'shuffle'   : False,
+	'nocolor'   : False
 }
 
-C1   = '\033[92m'
-C2   = '\033[94m'
-C3   = '\033[95m'
-ENDC = '\033[0m '
+class Color:
+	c1   = '\033[92m'
+	c2   = '\033[94m'
+	c3   = '\033[95m'
+	end  = '\033[0m '
+	
+	def disable(self):
+		self.c1  = ''
+		self.c2  = ''
+		self.c3  = ''
+		self.end = ' '
 
-files  = []
-decks  = []
+files = []
+decks = []
 
 def usage():
-	print """usage: flashcard: [-h] [-a] [-s] file1 [file2]
+	print """usage: flashcard: [-h] [-s] [-a] [-n] file1 [file2]
            -h    Show this help
            -s    Shuffle the deck
            -a    Alternate the first side of the card to be shown, randomly
+           -n    No color in output
 
-	   If file2 is omitted, it is presumed that the file is in dictionary format."""
+If file2 is omitted, it is presumed that the file is in dictionary format."""
 
-def readable(path):
-	return os.access(path, os.R_OK)
+# On failure, returns the name of the first unreadable file in files
+def readable(*files):
+	for f in files:
+		if not os.access(f, os.R_OK):
+			return f
+	return True
 
-def check_read(*args):
-	for f in args:
-		if not readable(f):
-			print "flashcard: " + f + " is not readable."
-			sys.exit(1)
-
-def check_count(n, *args):
-	if len(args) != n:
-		print "flashcard: you must specify exactly " + str(n) + \
-			" file(s) in this format"
-		sys.exit(1)
-
-def line_count(path):
-	with open(path) as f:
+# Returns the number of lines in file f.
+def line_count(f):
+	with open(f) as f:
 		for i, l in enumerate(f):
 			pass
 	return i + 1
 
+# Get the options and filenames
 def parse_args(args):
 	end_args = False
 	for a in args:
@@ -56,6 +59,9 @@ def parse_args(args):
 				continue
 			if a == '-s':
 				opts['shuffle'] = True
+				continue
+			if a == '-n':
+				opts['nocolor'] = True
 				continue
 			if a == '-h':
 				usage()
@@ -79,8 +85,7 @@ def read_decks(args, **kwargs):
 		format = kwargs["format"]
 
 	if format == "two-files":
-		check_count(2, *args)
-		check_read(*args)
+		readable(*args)
 		lines = line_count(args[0])
 		if lines != line_count(args[1]):
 			print "flashcard: files must have the same number of lines."
@@ -92,8 +97,7 @@ def read_decks(args, **kwargs):
 		return lines
 
 	if format == "dictionary":
-		check_count(1, *args)
-		check_read(*args)
+		readable(*args)
 		f = open(args[0])
 		try:
 			st   = parser.expr(f.read())
@@ -110,6 +114,10 @@ def read_decks(args, **kwargs):
 		return len(deck.keys())
 		
 def flashcards(unused):
+	t = Color()
+	if opts['nocolor']:
+		t.disable()
+	
 	while len(unused) != 0:
 		c = unused[0]
 		if opts['shuffle']:
@@ -120,16 +128,18 @@ def flashcards(unused):
 		if opts['alternate']:
 			side = random.choice([0, 1])
 
+
 		try:
 			if side == 0:
-				print C1 + "Q:" + ENDC + decks[0][c - 1].rstrip()
-				raw_input(C2 + "A:" + ENDC)
-				print " " * 3 + C3 + decks[1][c - 1].rstrip() + ENDC + "\n"
+				print t.c1 + "Q:" + t.end + decks[0][c - 1]
+				raw_input(t.c2 + "A:" + t.end)
+				print " " * 3 + t.c3 + decks[1][c - 1] + t.end + "\n"
 			if side == 1:
-				print C2 + "Q:" + ENDC + decks[1][c - 1].rstrip()
-				raw_input(C1 + "A:" + ENDC)
-				print " " * 3 + C3 + decks[0][c - 1].rstrip() + ENDC + "\n"
-		except (KeyboardInterrupt, Exception):
+				print t.c2 + "Q:" + t.end + decks[1][c - 1]
+				raw_input(t.c1 + "A:" + t.end)
+				print " " * 3 + t.c3 + decks[0][c - 1] + t.end + "\n"
+		# Silently quit on ^C or ^D.
+		except (KeyboardInterrupt, EOFError):
 			sys.exit(0)
 
 def main(args):
@@ -137,6 +147,5 @@ def main(args):
 	lines = read_decks(files)
 	unused = range(1, lines + 1)
 	flashcards(unused)
-
 if __name__ == '__main__':
  	main(sys.argv[1:])
