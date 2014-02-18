@@ -85,7 +85,9 @@ def read_decks(args, **kwargs):
 		format = kwargs["format"]
 
 	if format == "two-files":
-		readable(*args)
+		t = readable(*args)
+		if t != True:
+			print "flashcard: " + t + " is not readable."
 		lines = line_count(args[0])
 		if lines != line_count(args[1]):
 			print "flashcard: files must have the same number of lines."
@@ -97,7 +99,9 @@ def read_decks(args, **kwargs):
 		return lines
 
 	if format == "dictionary":
-		readable(*args)
+		t = readable(*args)
+		if t != True:
+			print "flashcard: " + t + " is not readable."
 		f = open(args[0])
 		try:
 			st   = parser.expr(f.read())
