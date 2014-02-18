@@ -38,7 +38,6 @@ mkdeck can be used with flashcard to generate a dictionary formatted file from t
 # Known Issues
 
 * Files in the dictionary format are not read into the program in the correct order of entries.
-* mkdeck doesn't tabulate the output very well.
 
 # TODO
 
