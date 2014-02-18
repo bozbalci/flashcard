@@ -87,10 +87,10 @@ def write_dict():
 		lines = len(decks[0])
 		for i in range(0, lines):
 			if i == lines - 1:
-				print>>f, "\t\"{0}\"\t:\t\"{1}\"".format(decks[0][i].rstrip(),\
+				print>>f, "\t\"{0}\": \"{1}\"".format(decks[0][i].rstrip(),\
 						decks[1][i].rstrip())
 				continue
-			print>>f, "\t\"{0}\"\t:\t\"{1}\",".format(decks[0][i].rstrip(),\
+			print>>f, "\t\"{0}\": \"{1}\",".format(decks[0][i].rstrip(),\
 					decks[1][i].rstrip())
 		print>>f, "}"
 		print>>f, ""
