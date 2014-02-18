@@ -30,10 +30,10 @@ The `two-files` subdirectory contains the examples in old format. The `dictionar
 ## mkdeck helper script
 mkdeck can be used with flashcard to generate a dictionary formatted file from two files (old format).
 
-        usage: mkdeck: [-o output] [-e] file1 file2
-               -o    Specify the output file, stdout by default
-               -e    Define the Python source encoding (PEP 0263), utf-8 by default
-               -h    Show this help
+    usage: mkdeck: [-o output] [-e] file1 file2
+           -o    Specify the output file, stdout by default
+           -e    Define the Python source encoding (PEP 0263), utf-8 by default
+           -h    Show this help
 
 # Known Issues
 
@@ -41,4 +41,8 @@ mkdeck can be used with flashcard to generate a dictionary formatted file from t
 
 # TODO
 
-* Be able to rate how well you remember an option
+* Rewrite some parts of the code
+* (?) Be able to rate how well you remember an option and allow scoring yourself
+* (?) Add an interactive mode, to allow generating decks faster
+* Make color optional, add color options, etc.
+* Add comments to the source code, making it easier to maintain
