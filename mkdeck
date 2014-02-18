@@ -11,11 +11,10 @@ files  = []
 decks  = []
 
 def usage():
-	print """mkdeck generates a dictionary file from two files for flashcard.
-    usage: mkdeck: [-o] file1 file2
-           -o    Specify the output file, stdout by default
-           -e    Define the Python source encoding (PEP 0263), utf-8 by default
-           -h    Show this help"""
+	print """usage: mkdeck: [-o outfile] file1 file2
+       -o    Specify the output file, stdout by default
+       -e    Define the Python source encoding (PEP 0263), utf-8 by default
+       -h    Show this help"""
 
 def readable(path):
 	return os.access(path, os.R_OK)
