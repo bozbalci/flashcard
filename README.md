@@ -15,7 +15,7 @@ Prepare plain-text flashcards and view them on the terminal
                -s    Shuffle the deck
                -a    Alternate the first side of the card to be shown, randomly
     
-    	   If file2 is omitted, it is presumed that the file is in dictionary format.
+    If file2 is omitted, it is presumed that the file is in dictionary format.
 
 If two files are specified, the two files must contain the same number of lines. See the examples for an idea of how the flashcard files should look like.
 
