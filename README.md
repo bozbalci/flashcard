@@ -21,6 +21,7 @@ If two files are specified, the two files must contain the same number of lines.
 
 After a card is shown, type your guess and press enter. The other side of the card will be shown afterwards.
 
+You can also use dict comprehesions in the dictionary file format. A very nice example could be found in [here.](https://github.com/berkoz/flashcard/blob/master/examples/dictionary/powers-of-two)
 
 ## Examples directory
 An example deck (beginner Swedish vocabulary) can be found at the `example` directory. It has been fetched from [this wonderful Online Swedish course by Björn Engdahl.](http://www.onlineswedish.com/main.php)
