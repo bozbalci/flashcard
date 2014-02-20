@@ -1,0 +1,5 @@
+# -*- coding: utf-8 -*-
+
+{ "What is 2 raised to the power " + str(i) + "?" : str(2 ** i) for i in range(0, 32) }
+
+# vim: ft=python
