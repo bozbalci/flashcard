@@ -113,8 +113,8 @@ def read_decks(args, **kwargs):
 		if not isinstance(deck, type({})):
 			print "flashcard: dictionary file contains errors"
 		 	sys.exit(1)
-		decks.append(deck.keys())
 		decks.append(deck.values())
+		decks.append(deck.keys())
 		return len(deck.keys())
 		
 def flashcards(unused):
