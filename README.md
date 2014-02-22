@@ -10,11 +10,13 @@ Prepare plain-text flashcards and view them on the terminal
 
 # Usage
 
-    usage: flashcard: [-h] [-a] [-s] file1 [file2]
-               -h    Show this help
-               -s    Shuffle the deck
-               -a    Alternate the first side of the card to be shown, randomly
-    
+    usage: flashcard: [-h] [-s] [-a] [-n] [-i] file1 [file2]
+           -h    Show this help
+           -s    Shuffle the deck
+           -a    Alternate the first side of the card to be shown, randomly
+           -n    No color in output
+           -i    Invert the order of sides of the card to be shown
+
     If file2 is omitted, it is presumed that the file is in dictionary format.
 
 If two files are specified, the two files must contain the same number of lines. See the examples for an idea of how the flashcard files should look like.

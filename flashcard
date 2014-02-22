@@ -7,7 +7,8 @@ import parser
 opts = {
 	'alternate' : False,
 	'shuffle'   : False,
-	'nocolor'   : False
+	'nocolor'   : False,
+	'invert'    : False
 }
 
 class Color:
@@ -26,11 +27,12 @@ files = []
 decks = []
 
 def usage():
-	print """usage: flashcard: [-h] [-s] [-a] [-n] file1 [file2]
+	print """usage: flashcard: [-h] [-s] [-a] [-n] [-i] file1 [file2]
            -h    Show this help
            -s    Shuffle the deck
            -a    Alternate the first side of the card to be shown, randomly
            -n    No color in output
+           -i    Invert the order of sides of the card to be shown
 
 If file2 is omitted, it is presumed that the file is in dictionary format."""
 
@@ -62,6 +64,9 @@ def parse_args(args):
 				continue
 			if a == '-n':
 				opts['nocolor'] = True
+				continue
+			if a == '-i':
+				opts['invert'] = True
 				continue
 			if a == '-h':
 				usage()
@@ -113,8 +118,8 @@ def read_decks(args, **kwargs):
 		if not isinstance(deck, type({})):
 			print "flashcard: dictionary file contains errors"
 		 	sys.exit(1)
-		decks.append(deck.values())
 		decks.append(deck.keys())
+		decks.append(deck.values())
 		return len(deck.keys())
 		
 def flashcards(unused):
@@ -128,10 +133,12 @@ def flashcards(unused):
 			c = random.choice(unused)
 		unused.remove(c)
 
-		side = 1
+		side = 0
+		if opts['invert']:
+			side = 1
+
 		if opts['alternate']:
 			side = random.choice([0, 1])
-
 
 		try:
 			if side == 0:
